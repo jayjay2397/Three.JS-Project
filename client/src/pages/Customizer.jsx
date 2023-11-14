@@ -13,6 +13,31 @@ import { AIChooser, CustomButton, ColorChooser, FileChooser, Tab} from '../compo
 const Customizer = () => {
     const snap = useSnapshot(state);
 
+    const [file, setFile ] = useState('');
+
+    const [prompt, setPrompt] = useState('');
+    const [generatingImg, setgeneratingImg] = useState(false);
+
+    const[actviveEditorTab, setActiveEditorTab] = useState(" ");
+    const[activeFilterTab, setActiveFilterTab] = useState({
+        logoShirt: true,
+        stylishShirt: false,
+    })
+
+//show the tab content depending on the active tab
+const genearateTabContent = () => { 
+    switch(actviveEditorTab){
+        case "colorchooser":
+            return <ColorChooser />;
+        case "filechooser":
+            return <FileChooser />;
+        case "aichooser":
+            return <AIChooser />;
+        default:
+            return null;
+
+    }
+
     return (
         <AnimatePresence>
             {!snap.intro && (
@@ -27,9 +52,12 @@ const Customizer = () => {
                             <Tab
                                 key={tab.name}
                                 tab={tab}
-                                handleClick={() => {} }
+                                handleClick={() => setActiveEditorTab(tab.name)} 
                             />
                         ))}
+
+                        {genearateTabConten(s)}
+
                     </div>
                 </div>
             </motion.div>
